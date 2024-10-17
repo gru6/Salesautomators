@@ -7,9 +7,60 @@
     <link rel="stylesheet" href="deal-form-styles.css">
 </head>
 <body>
-    <form class="deal-form">
-        <!--TODO form fields -->
-    </form>
+    <div class="deal-form-container">
+        <form class="deal-form">
+            <div class="deal-form__section">
+                <h2 class="deal-form__title">Client details</h2>
+                <div class="deal-form__row">
+                    <input type="text" class="deal-form__input" placeholder="First name">
+                    <input type="text" class="deal-form__input" placeholder="Last name">
+                </div>
+                <input type="tel" class="deal-form__input" placeholder="Phone">
+                <input type="email" class="deal-form__input" placeholder="Email (optional)">
+            </div>
+
+            <div class="deal-form__section">
+                <h2 class="deal-form__title">Job details</h2>
+                <div class="deal-form__row">
+                    <select class="deal-form__select">
+                        <option value="">Job type</option>
+                    </select>
+                    <select class="deal-form__select">
+                        <option value="">Job source</option>
+                    </select>
+                </div>
+                <textarea class="deal-form__textarea" placeholder="Job description (optional)"></textarea>
+            </div>
+
+            <div class="deal-form__section">
+                <h2 class="deal-form__title">Service location</h2>
+                <input type="text" class="deal-form__input" placeholder="Address">
+                <input type="text" class="deal-form__input" placeholder="City">
+                <input type="text" class="deal-form__input" placeholder="State">
+                <div class="deal-form__row">
+                    <input type="text" class="deal-form__input" placeholder="Zip code">
+                    <select class="deal-form__select">
+                        <option value="">Area</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="deal-form__section">
+                <h2 class="deal-form__title">Scheduled</h2>
+                <input type="date" class="deal-form__input deal-form__input_date" placeholder="Start date">
+                <div class="deal-form__row">
+                    <input type="time" class="deal-form__input deal-form__input_time" placeholder="Start time">
+                    <input type="time" class="deal-form__input deal-form__input_time" placeholder="End time">
+                </div>
+                <select class="deal-form__select">
+                    <option value="">Test select</option>
+                </select>
+            </div>
+        </form>
+        <div class="deal-form__submit-container">
+            <button type="submit" class="deal-form__submit">Create Job</button>
+        </div>
+    </div>
     <script src="deal-form-script.js"></script>
 </body>
 </html>

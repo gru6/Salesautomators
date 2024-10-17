@@ -1,23 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
 
-    const modal = document.querySelector(".modal_deal");
-    const modalOpenBtn = document.querySelector(".deal-creator__button");
-    const modalCloseBtn = document.querySelector(".modal__close");
-    const modalForm = document.querySelector(".modal__form");
+    const createDealButton = document.querySelector('.deal-creator__button');
+    const modal = document.querySelector('.modal_deal');
+    const closeButton = document.querySelector('.modal__close');
+    const iframe = document.querySelector('.modal__form');
 
-    modalOpenBtn.addEventListener('click', function() {
-        console.log('Button clicked');
-        modal.style.display = "block";
+    createDealButton.addEventListener('click', function() {
+        modal.style.display = 'block';
     });
 
-    modalCloseBtn.addEventListener('click', function() {
-        modal.style.display = "none";
+    closeButton.addEventListener('click', function() {
+        modal.style.display = 'none';
     });
 
     window.addEventListener('click', function(event) {
         if (event.target === modal) {
-            modal.style.display = "none";
+            modal.style.display = 'none';
+        }
+    });
+
+    // Listen messages from iframe
+    window.addEventListener('message', function(event) {
+        if (event.data.type === 'formSubmitted') {
+            console.log('Форма отправлена:', event.data.formData);
+            modal.style.display = 'none';
         }
     });
 });

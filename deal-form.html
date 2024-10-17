@@ -12,34 +12,34 @@
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Client details</h2>
                 <div class="deal-form__row">
-                    <input type="text" class="deal-form__input" placeholder="First name">
-                    <input type="text" class="deal-form__input" placeholder="Last name">
+                    <input type="text" name="firstName" class="deal-form__input" placeholder="First name">
+                    <input type="text" name="lastName" class="deal-form__input" placeholder="Last name">
                 </div>
-                <input type="tel" class="deal-form__input" placeholder="Phone">
-                <input type="email" class="deal-form__input" placeholder="Email (optional)">
+                <input type="tel" name="phone" class="deal-form__input" placeholder="Phone">
+                <input type="email" name="email" class="deal-form__input" placeholder="Email (optional)">
             </div>
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Job details</h2>
                 <div class="deal-form__row">
-                    <select class="deal-form__select">
+                    <select name="jobType" class="deal-form__select">
                         <option value="">Job type</option>
                     </select>
-                    <select class="deal-form__select">
+                    <select name="jobSource" class="deal-form__select">
                         <option value="">Job source</option>
                     </select>
                 </div>
-                <textarea class="deal-form__textarea" placeholder="Job description (optional)"></textarea>
+                <textarea name="jobDescription" class="deal-form__textarea" placeholder="Job description (optional)"></textarea>
             </div>
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Service location</h2>
-                <input type="text" class="deal-form__input" placeholder="Address">
-                <input type="text" class="deal-form__input" placeholder="City">
-                <input type="text" class="deal-form__input" placeholder="State">
+                <input type="text" name="adress" class="deal-form__input" placeholder="Adress">
+                <input type="text" name="city" class="deal-form__input" placeholder="City">
+                <input type="text" name="state" class="deal-form__input" placeholder="State">
                 <div class="deal-form__row">
-                    <input type="text" class="deal-form__input" placeholder="Zip code">
-                    <select class="deal-form__select">
+                    <input type="text" name="zipCode" class="deal-form__input" placeholder="Zip code">
+                    <select name="area" class="deal-form__select">
                         <option value="">Area</option>
                     </select>
                 </div>
@@ -47,13 +47,13 @@
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Scheduled</h2>
-                <input type="date" class="deal-form__input deal-form__input_date" placeholder="Start date">
+                <input type="date" name="startDate" class="deal-form__input deal-form__input_date" placeholder="Start date">
                 <div class="deal-form__row">
-                    <input type="time" class="deal-form__input deal-form__input_time" placeholder="Start time">
-                    <input type="time" class="deal-form__input deal-form__input_time" placeholder="End time">
+                    <input type="time" name="startTime" class="deal-form__input deal-form__input_time" placeholder="Start time">
+                    <input type="time" name="endTime" class="deal-form__input deal-form__input_time" placeholder="End time">
                 </div>
-                <select class="deal-form__select">
-                    <option value="">Test select</option>
+                <select name="testSelect" class="deal-form__select">
+                    <option value="">Select technician</option>
                 </select>
             </div>
         </form>

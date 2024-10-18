@@ -6,27 +6,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.querySelector('.modal__close');
     const iframe = document.querySelector('.modal__form');
 
+    let isModalOpening = false;
+
     createDealButton.addEventListener('click', function() {
-        modal.style.display = 'block';
+        if (!isModalOpening) {
+            isModalOpening = true;
+            modal.style.display = 'block';
+            
+            // Перезагружаем iframe только если модальное окно было закрыто
+            if (iframe && iframe.contentWindow.location.href === 'about:blank') {
+                iframe.src = iframe.src;
+            }
+            
+            setTimeout(() => {
+                isModalOpening = false;
+            }, 100);
+        }
     });
 
-    closeButton.addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
+    closeButton.addEventListener('click', closeModal);
 
     window.addEventListener('click', function(event) {
         if (event.target === modal) {
-            modal.style.display = 'none';
+            closeModal();
         }
     });
 
-    // Listen messages from iframe
+    function closeModal() {
+        modal.style.display = 'none';
+        // Сбрасываем форму и скрываем модальное окно
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage('resetForm', '*');
+        }
+    }
+
+    /* // Слушаем сообщения от iframe
     window.addEventListener('message', function(event) {
         if (event.data.type === 'formSubmitted') {
-            console.log('Форма отправлена:', event.data.formData);
-            modal.style.display = 'none';
+            console.log('Форма отправлена:', event.data.success);
+            if (event.data.success) {
+                console.log('URL созданной сделки:', event.data.dealUrl);
+                // Здесь можно что-то сделать с URL сделки, например, показать его пользователю
+            }
         }
-    });
+    }); */
 });
 
 console.log('Script file loaded');

@@ -15,7 +15,7 @@
                     <input type="text" name="firstName" class="deal-form__input" placeholder="First name" required>
                     <input type="text" name="lastName" class="deal-form__input" placeholder="Last name" required>
                 </div>
-                <input type="tel" name="phone" class="deal-form__input" placeholder="Phone" required 
+                <input type="tel" name="phone" class="deal-form__input" placeholder="Phone"  
                        pattern="^\+?\d{8,}$" 
                        title="Phone number should have more than 8 digits or +">
                 <input type="email" name="email" class="deal-form__input" placeholder="Email (optional)">
@@ -24,7 +24,7 @@
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Job details</h2>
                 <div class="deal-form__row">
-                    <select name="jobType" class="deal-form__select" required>
+                    <select name="jobType" class="deal-form__select" >
                         <option value="" disabled selected>Job type</option>
                         <option value="Software Development">Software Development</option>
                         <option value="Web Design">Web Design</option>
@@ -34,7 +34,7 @@
                         <option value="Cybersecurity">Cybersecurity</option>
                         <option value="Cloud Migration">Cloud Migration</option>
                     </select>
-                    <select name="jobSource" class="deal-form__select" required>
+                    <select name="jobSource" class="deal-form__select" >
                         <option value="" disabled selected>Job source</option>
                         <option value="Company Website">Company Website</option>
                         <option value="LinkedIn">LinkedIn</option>
@@ -50,14 +50,14 @@
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Service location</h2>
-                <input type="text" name="address" class="deal-form__input" placeholder="Address" required>
-                <input type="text" name="city" class="deal-form__input" placeholder="City" required>
-                <input type="text" name="state" class="deal-form__input" placeholder="State" required>
+                <input type="text" name="address" class="deal-form__input" placeholder="Address" >
+                <input type="text" name="city" class="deal-form__input" placeholder="City" >
+                <input type="text" name="state" class="deal-form__input" placeholder="State" >
                 <div class="deal-form__row">
-                    <input type="text" name="zipCode" class="deal-form__input" placeholder="Zip code" required 
+                    <input type="text" name="zipCode" class="deal-form__input" placeholder="Zip code"  
                            pattern="^\d{5,}$|^\d{5}-\d+$" 
                            title="Zip code should have at least 5 digits or -">
-                    <select name="area" class="deal-form__select" required>
+                    <select name="area" class="deal-form__select" >
                         <option value="" disabled selected>Area</option>
                         <option value="Europe">Europe</option>
                         <option value="North America">North America</option>
@@ -72,12 +72,12 @@
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Scheduled</h2>
-                <input type="date" name="startDate" class="deal-form__input deal-form__input_date" lang="en-US" placeholder="DD.MM.YYYY" required>
+                <input type="date" name="startDate" class="deal-form__input deal-form__input_date" lang="en-US" placeholder="DD.MM.YYYY" >
                 <div class="deal-form__row">
-                    <input type="time" name="startTime" class="deal-form__input deal-form__input_time" placeholder="Start time" required>
-                    <input type="time" name="endTime" class="deal-form__input deal-form__input_time" placeholder="End time" required>
+                    <input type="time" name="startTime" class="deal-form__input deal-form__input_time" placeholder="Start time" >
+                    <input type="time" name="endTime" class="deal-form__input deal-form__input_time" placeholder="End time" >
                 </div>
-                <select name="technician" class="deal-form__select" required>
+                <select name="technician" class="deal-form__select" >
                     <option value="" disabled selected>Select technician</option>
                     <option value="tech1">John Doe</option>
                     <option value="tech2">Jane Smith</option>
@@ -91,6 +91,10 @@
             </div>
         </form>
         
+        <div class="form-status" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p class="status-message"></p>
+        </div>
     </div>
     <script src="deal-form-script.js"></script>
 </body>

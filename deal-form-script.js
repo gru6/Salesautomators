@@ -2,22 +2,77 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM загружен, скрипт инициализирован');
 
     const form = document.getElementById('dealForm');
+    const formStatus = document.querySelector('.form-status');
+    const statusMessage = document.querySelector('.status-message');
+    const loadingSpinner = document.querySelector('.loading-spinner');
 
-    if (form) {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            console.log('Форма отправлена');
-
-            if (form.checkValidity()) {
-                const formData = new FormData(form);
-                submitFormToPipedrive(formData);
-            } else {
-                console.log('Форма не прошла валидацию');
-            }
-        });
-    } else {
-        console.warn('Форма не найдена');
+    function hideStatus() {
+        formStatus.style.display = 'none';
+        form.style.display = 'grid';
+        form.reset();
     }
+
+    function showForm() {
+        formStatus.style.display = 'none';
+        form.style.display = 'grid';
+    }
+
+    function showLoading() {
+        formStatus.style.display = 'block';
+        loadingSpinner.style.display = 'block';
+        statusMessage.textContent = 'Отправка данных...';
+        form.style.display = 'none';
+    }
+
+    function showSuccess(dealUrl) {
+        formStatus.style.display = 'block';
+        loadingSpinner.style.display = 'none';
+        form.style.display = 'none';
+        statusMessage.innerHTML = `
+            Форма успешно отправлена!<br>
+            ${dealUrl ? `<a href="${dealUrl}" target="_blank" class="deal-link">Посмотреть созданную сделку</a>` : 'URL сделки недоступен'}
+        `;
+    }
+
+    function showError(error) {
+        formStatus.style.display = 'block';
+        loadingSpinner.style.display = 'none';
+        form.style.display = 'none';
+        statusMessage.textContent = `Ошибка: ${error}`;
+    }
+
+    // Обработчик сообщений
+    window.addEventListener('message', function(event) {
+        if (event.data === 'resetForm') {
+            hideStatus();
+            /* showForm(); */
+        }
+    });
+
+    // Обработчик отправки формы
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        if (form.checkValidity()) {
+            const formData = new FormData(form);
+            showLoading();
+            
+            try {
+                const dealUrl = await submitFormToPipedrive(formData);
+                showSuccess(dealUrl);
+                // Отправляем сообщение родительскому окну
+                window.parent.postMessage({ type: 'formSubmitted', success: true, dealUrl: dealUrl }, '*');
+            } catch (error) {
+                console.error('Ошибка при отправке данных в Pipedrive:', error);
+                showError(error.message);
+            }
+        } else {
+            console.log('Форма не прошла валидацию');
+        }
+    });
+
+    // Показываем форму при загрузке страницы
+    showForm();
 });
 
 async function submitFormToPipedrive(formData) {
@@ -85,7 +140,27 @@ async function submitFormToPipedrive(formData) {
         }
 
         console.log('Сделка успешно создана!');
+        
+        if (!responseData.data || !responseData.data.id) {
+            console.error('ID сделки отсутствует в ответе API');
+            throw new Error('ID сделки не найден');
+        }
+
+        const dealId = responseData.data.id;
+        const dealUrl = `https://slowtravel.pipedrive.com/deal/${dealId}`; // Замените 'your-company-domain' на ваш домен в Pipedrive
+        console.log('Сконструированный URL сделки:', dealUrl);
+
+        // Отправляем сообщение родительскому окну с URL сделки
+        window.parent.postMessage({ 
+            type: 'formSubmitted', 
+            success: true,
+            formData: Object.fromEntries(formData),
+            dealUrl: dealUrl
+        }, '*');
+
+        return dealUrl;
     } catch (error) {
         console.error('Ошибка при отправке данных в Pipedrive:', error);
+        throw error;
     }
 }

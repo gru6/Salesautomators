@@ -1,55 +1,36 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded');
+// Wait for DOM to be fully loaded before executing the script
+document.addEventListener('DOMContentLoaded', function () {
 
     const createDealButton = document.querySelector('.deal-creator__button');
     const modal = document.querySelector('.modal_deal');
     const closeButton = document.querySelector('.modal__close');
     const iframe = document.querySelector('.modal__form');
 
-    let isModalOpening = false;
+    let isModalOpen = false;
 
-    createDealButton.addEventListener('click', function() {
-        if (!isModalOpening) {
-            isModalOpening = true;
-            modal.style.display = 'block';
-            
-            // Перезагружаем iframe только если модальное окно было закрыто
-            if (iframe && iframe.contentWindow.location.href === 'about:blank') {
-                iframe.src = iframe.src;
-            }
-            
-            setTimeout(() => {
-                isModalOpening = false;
-            }, 100);
+    createDealButton.addEventListener('click', function (event) {
+        if (!isModalOpen) {
+            openModal();
         }
     });
 
     closeButton.addEventListener('click', closeModal);
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target === modal) {
             closeModal();
         }
     });
 
-    function closeModal() {
-        modal.style.display = 'none';
-        // Сбрасываем форму и скрываем модальное окно
-        if (iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage('resetForm', '*');
+    function openModal() {
+        if (!isModalOpen) {
+            isModalOpen = true;
+            modal.style.display = 'block';
         }
     }
 
-    /* // Слушаем сообщения от iframe
-    window.addEventListener('message', function(event) {
-        if (event.data.type === 'formSubmitted') {
-            console.log('Форма отправлена:', event.data.success);
-            if (event.data.success) {
-                console.log('URL созданной сделки:', event.data.dealUrl);
-                // Здесь можно что-то сделать с URL сделки, например, показать его пользователю
-            }
-        }
-    }); */
+    function closeModal() {
+        isModalOpen = false;
+        modal.style.display = 'none';
+    }
 });
-
-console.log('Script file loaded');

@@ -1,19 +1,24 @@
 const API_TOKEN = '6a5ede21d8bda2613a7064669667f759c8a00b53';
 const API_URL = 'https://api.pipedrive.com/v1/';
 
+// Main function to submit form data to Pipedrive
 export async function submitFormToPipedrive(formData) {
     try {
-        const fieldsData = await getCustomFields();
-        const dealData = createDealData(formData, fieldsData);
-        const responseData = await createDeal(dealData);
+        // Get information about custom deal fields
+        const fieldsData = await getCustomFieldsFromPipedrive();
+        // Create a deal data object based on form data and custom fields
+        const dealData = handleDealData(formData, fieldsData);
+        // Send a request to create a deal in Pipedrive
+        const responseData = await createDealInPipedrive(dealData);
+        // Construct the URL of the created deal
         return constructDealUrl(responseData);
     } catch (error) {
-        console.error('Ошибка при отправке данных в Pipedrive:', error);
+        console.error('Error sending data to Pipedrive:', error);
         throw error;
     }
 }
 
-async function getCustomFields() {
+async function getCustomFieldsFromPipedrive() {
     const fieldsResponse = await fetch(`${API_URL}dealFields?api_token=${API_TOKEN}`);
     const fieldsData = await fieldsResponse.json();
 
@@ -24,11 +29,13 @@ async function getCustomFields() {
     return fieldsData;
 }
 
-function createDealData(formData, fieldsData) {
+function handleDealData(formData, fieldsData) {
+    // Create a basic deal object with a title
     const dealData = {
         title: `${formData.get('firstName')} ${formData.get('lastName')} - ${formData.get('jobType')}`,
     };
 
+    // Object for mapping form fields to Pipedrive fields
     const fieldMapping = {
         firstName: 'First name',
         lastName: 'Last name',
@@ -45,11 +52,14 @@ function createDealData(formData, fieldsData) {
         startDate: 'Date',
         startTime: 'Start time',
         endTime: 'End time',
-        testSelect: 'Technician'
+        technician: 'Technician'
     };
 
+    // Iterate through all custom fields from Pipedrive
     fieldsData.data.forEach(field => {
+        // Find the corresponding form field
         const formFieldName = Object.keys(fieldMapping).find(key => fieldMapping[key] === field.name);
+        // If the field is found and exists in the form data, add its value to the deal object
         if (formFieldName && formData.has(formFieldName)) {
             dealData[field.key] = formData.get(formFieldName);
         }
@@ -58,7 +68,7 @@ function createDealData(formData, fieldsData) {
     return dealData;
 }
 
-async function createDeal(dealData) {
+async function createDealInPipedrive(dealData) {
     const response = await fetch(`${API_URL}deals?api_token=${API_TOKEN}`, {
         method: 'POST',
         headers: {
@@ -78,7 +88,7 @@ async function createDeal(dealData) {
 
 function constructDealUrl(responseData) {
     if (!responseData.data || !responseData.data.id) {
-        throw new Error('ID сделки не найден');
+        throw new Error('Deal ID not found');
     }
 
     const dealId = responseData.data.id;

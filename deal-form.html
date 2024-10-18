@@ -8,25 +8,41 @@
 </head>
 <body>
     <div class="deal-form-container">
-        <form class="deal-form">
+        <form class="deal-form" id="dealForm">
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Client details</h2>
                 <div class="deal-form__row">
-                    <input type="text" name="firstName" class="deal-form__input" placeholder="First name">
-                    <input type="text" name="lastName" class="deal-form__input" placeholder="Last name">
+                    <input type="text" name="firstName" class="deal-form__input" placeholder="First name" required>
+                    <input type="text" name="lastName" class="deal-form__input" placeholder="Last name" required>
                 </div>
-                <input type="tel" name="phone" class="deal-form__input" placeholder="Phone">
+                <input type="tel" name="phone" class="deal-form__input" placeholder="Phone" required 
+                       pattern="^\+?\d{8,}$" 
+                       title="Phone number should have more than 8 digits or +">
                 <input type="email" name="email" class="deal-form__input" placeholder="Email (optional)">
             </div>
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Job details</h2>
                 <div class="deal-form__row">
-                    <select name="jobType" class="deal-form__select">
-                        <option value="">Job type</option>
+                    <select name="jobType" class="deal-form__select" required>
+                        <option value="" disabled selected>Job type</option>
+                        <option value="Software Development">Software Development</option>
+                        <option value="Web Design">Web Design</option>
+                        <option value="Network Setup">Network Setup</option>
+                        <option value="IT Support">IT Support</option>
+                        <option value="Data Analysis">Data Analysis</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Cloud Migration">Cloud Migration</option>
                     </select>
-                    <select name="jobSource" class="deal-form__select">
-                        <option value="">Job source</option>
+                    <select name="jobSource" class="deal-form__select" required>
+                        <option value="" disabled selected>Job source</option>
+                        <option value="Company Website">Company Website</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="Tech Conference">Tech Conference</option>
+                        <option value="Referral">Referral</option>
+                        <option value="Online Ad">Online Ad</option>
+                        <option value="GitHub">GitHub</option>
+                        <option value="Tech Forum">Tech Forum</option>
                     </select>
                 </div>
                 <textarea name="jobDescription" class="deal-form__textarea" placeholder="Job description (optional)"></textarea>
@@ -34,32 +50,47 @@
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Service location</h2>
-                <input type="text" name="adress" class="deal-form__input" placeholder="Adress">
-                <input type="text" name="city" class="deal-form__input" placeholder="City">
-                <input type="text" name="state" class="deal-form__input" placeholder="State">
+                <input type="text" name="address" class="deal-form__input" placeholder="Address" required>
+                <input type="text" name="city" class="deal-form__input" placeholder="City" required>
+                <input type="text" name="state" class="deal-form__input" placeholder="State" required>
                 <div class="deal-form__row">
-                    <input type="text" name="zipCode" class="deal-form__input" placeholder="Zip code">
-                    <select name="area" class="deal-form__select">
-                        <option value="">Area</option>
+                    <input type="text" name="zipCode" class="deal-form__input" placeholder="Zip code" required 
+                           pattern="^\d{5,}$|^\d{5}-\d+$" 
+                           title="Zip code should have at least 5 digits or -">
+                    <select name="area" class="deal-form__select" required>
+                        <option value="" disabled selected>Area</option>
+                        <option value="Europe">Europe</option>
+                        <option value="North America">North America</option>
+                        <option value="South America">South America</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Antarctica">Antarctica</option>
                     </select>
                 </div>
             </div>
 
             <div class="deal-form__section">
                 <h2 class="deal-form__title">Scheduled</h2>
-                <input type="date" name="startDate" class="deal-form__input deal-form__input_date" placeholder="Start date">
+                <input type="date" name="startDate" class="deal-form__input deal-form__input_date" lang="en-US" placeholder="DD.MM.YYYY" required>
                 <div class="deal-form__row">
-                    <input type="time" name="startTime" class="deal-form__input deal-form__input_time" placeholder="Start time">
-                    <input type="time" name="endTime" class="deal-form__input deal-form__input_time" placeholder="End time">
+                    <input type="time" name="startTime" class="deal-form__input deal-form__input_time" placeholder="Start time" required>
+                    <input type="time" name="endTime" class="deal-form__input deal-form__input_time" placeholder="End time" required>
                 </div>
-                <select name="testSelect" class="deal-form__select">
-                    <option value="">Select technician</option>
+                <select name="technician" class="deal-form__select" required>
+                    <option value="" disabled selected>Select technician</option>
+                    <option value="tech1">John Doe</option>
+                    <option value="tech2">Jane Smith</option>
+                    <option value="tech3">Mike Johnson</option>
+                    <option value="tech4">Sarah Williams</option>
+                    <option value="tech5">Alex Chen</option>
                 </select>
             </div>
+            <div class="deal-form__submit-container">
+                <button type="submit" class="deal-form__submit">Create Job</button>
+            </div>
         </form>
-        <div class="deal-form__submit-container">
-            <button type="submit" class="deal-form__submit">Create Job</button>
-        </div>
+        
     </div>
     <script src="deal-form-script.js"></script>
 </body>

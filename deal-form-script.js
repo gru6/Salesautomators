@@ -1,19 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM загружен, скрипт инициализирован');
 
-    const form = document.querySelector('.deal-form');
-    const submitButton = document.querySelector('.deal-form__submit');
+    const form = document.getElementById('dealForm');
 
-    if (submitButton) {
-        submitButton.addEventListener('click', function(event) {
+    if (form) {
+        form.addEventListener('submit', function(event) {
             event.preventDefault();
-            console.log('Кнопка Create Job нажата');
+            console.log('Форма отправлена');
 
-            const formData = new FormData(form);
-            submitFormToPipedrive(formData);
+            if (form.checkValidity()) {
+                const formData = new FormData(form);
+                submitFormToPipedrive(formData);
+            } else {
+                console.log('Форма не прошла валидацию');
+            }
         });
     } else {
-        console.warn('Кнопка Create Job не найдена');
+        console.warn('Форма не найдена');
     }
 });
 

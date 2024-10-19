@@ -1,10 +1,8 @@
-// Wait for DOM to be fully loaded before executing the script
 document.addEventListener('DOMContentLoaded', function () {
 
     const createDealButton = document.querySelector('.deal-creator__button');
     const modal = document.querySelector('.modal_deal');
     const closeButton = document.querySelector('.modal__close');
-    const iframe = document.querySelector('.modal__form');
 
     let isModalOpen = false;
 

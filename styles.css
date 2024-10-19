@@ -69,7 +69,7 @@ body {
     border: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
     .modal__content {
         width: 95%;
         margin: 10% auto;
